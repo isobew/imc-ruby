@@ -1,41 +1,42 @@
 class ImcController < ApplicationController
   before_action :set_imc, only: %i[ show update destroy ]
 
-  # GET /imc
-  def index
-    @imc = Imc.all
-
-    render json: @imc
-  end
-
-  # GET /imc/1
-  def show
-    render json: @imc
-  end
-
   # POST /imc
   def create
     @imc = Imc.new(imc_params)
-
+    
     if @imc.save
-      render json: @imc, status: :created, location: @imc
+      imc = (@imc.weight / (@imc.height * @imc.height)).round(2)
+      @imc.imc = imc
+
+      case @imc.imc
+      when ..18.5
+        @imc.classification = "Magreza"
+        @imc.obesity = "O"
+      when 18.5..24.9
+        @imc.classification = "Normal"
+        @imc.obesity = "O"
+      when 25.0..29.9
+        @imc.classification = "Sobrepeso"
+        @imc.obesity = "I"
+      when 30.0..39.9
+        @imc.classification = "Obesidade"
+        @imc.obesity = "II"
+      else
+        @imc.classification = "Obesidade grave"
+        @imc.obesity = "III"
+      end
+
+      render json: {
+        imc: @imc.imc, 
+        classification: @imc.classification, 
+        obesity: @imc.obesity
+      }, 
+      status: :created, 
+      location: @imc
     else
       render json: @imc.errors, status: :unprocessable_entity
     end
-  end
-
-  # PATCH/PUT /imc/1
-  def update
-    if @imc.update(imc_params)
-      render json: @imc
-    else
-      render json: @imc.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /imc/1
-  def destroy
-    @imc.destroy
   end
 
   private
