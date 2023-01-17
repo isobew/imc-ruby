@@ -1,24 +1,9 @@
-# README
+Projeto em Ruby on Rails de cálculo de IMC
+ - Contém uma rota POST em API REST (/imc) que solicita os parâmetros de altura e largura e retorna o número do IMC, a classificação e o nível de obesidade;
+ - Contém a preparação de JWT sem rota de login. 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ Para rodar o projeto você precisará dos seguintes comandos:
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ - bundle install
+ - rake bd:migrate
+ - rails server
