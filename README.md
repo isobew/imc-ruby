@@ -5,5 +5,5 @@ Projeto em Ruby on Rails de cálculo de IMC
  Para rodar o projeto você precisará dos seguintes comandos:
 
  - bundle install
- - rake bd:migrate
+ - rails bd:migrate
  - rails server
